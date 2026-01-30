@@ -1,0 +1,242 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Assignment 2 Solutions</title>
+        
+    <style>
+        @media print {
+            @page { margin: 2cm; }
+            body { max-width: 100%; }
+        }
+        body {
+            font-family: 'DejaVu Sans', 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; }
+        h3 { color: #7f8c8d; margin-top: 25px; }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #3498db;
+        }
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 30px 0;
+        }
+        figure.figure-with-caption {
+            margin: 20px auto;
+            text-align: center;
+        }
+        figure.figure-with-caption img {
+            margin-bottom: 0;
+        }
+        figure.figure-with-caption figcaption {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-top: 6px;
+        }
+    </style>
+    
+        
+    <script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    
+    </head>
+    <body>
+        <h1>Assignment 2</h1>
+<p>My solutions for the assignment. I used Python (NetworkX, matplotlib) for the graphs.</p>
+<hr />
+<h1>Question 1: Triangle-Free Graphs</h1>
+<p>The bound is $m \leq \lfloor n^2/4 \rfloor$.</p>
+<h3>(a) Examples for $n = 2, 3, 4, 5, 6$</h3>
+<p>I used complete bipartite graphs $K_{\lfloor n/2 \rfloor, \lceil n/2 \rceil}$ so the number of edges hits the bound. Below I draw them for each $n$.</p>
+<p><strong>Common property I noticed:</strong> They are all complete bipartite with the two parts as equal as possible.</p>
+<p><img alt="n=2" src="assignment_images\fig_1.png" /></p>
+<p><img alt="n=3" src="assignment_images\fig_2.png" /></p>
+<p><img alt="n=4" src="assignment_images\fig_3.png" /></p>
+<p><img alt="n=5" src="assignment_images\fig_4.png" /></p>
+<p><img alt="n=6" src="assignment_images\fig_5.png" /></p>
+<h3>(b) General construction</h3>
+<p>For any $n$ I take $G = K_{\lfloor n/2 \rfloor, \lceil n/2 \rceil}$. It's bipartite so no triangles, and the edge count is $\lfloor n/2 \rfloor \cdot \lceil n/2 \rceil = \lfloor n^2/4 \rfloor$, so it reaches the bound.</p>
+<hr />
+<h2>Question 2: Bi-graphical Sequences</h2>
+<h3>(a) $S_1 = \langle 6, 5, 5, 5, 3, 2, 1, 1 \rangle$, $S_2 = \langle 5, 5, 4, 3, 2 \rangle$</h3>
+<p>Here $a_1 = 6$ but $|S_2| = 5$, so we need $a_1 \le s$ and it fails. So <strong>I get: not bi-graphical.</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">Part</span> <span class="p">(</span><span class="n">a</span><span class="p">):</span>
+  <span class="nb">sum</span><span class="p">(</span><span class="n">S1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">28</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">S2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">19</span>
+  <span class="n">Sum</span> <span class="n">mismatch</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">S1</span><span class="p">)</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">S2</span><span class="p">)</span><span class="o">=</span><span class="mi">19</span>
+  <span class="n">Bi</span><span class="o">-</span><span class="n">graphical</span><span class="err">?</span> <span class="kc">False</span>
+  <span class="n">So</span> <span class="n">my</span> <span class="n">answer</span> <span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="ow">is</span><span class="p">:</span> <span class="n">No</span><span class="p">,</span> <span class="ow">not</span> <span class="n">bi</span><span class="o">-</span><span class="n">graphical</span><span class="o">.</span>
+</code></pre></div>
+
+<h3>(b) $S_1 = \langle 8, 6, 4, 4, 4, 4, 4 \rangle$, $S_2 = \langle 6, 5, 4, 4, 4, 4, 3, 3, 1 \rangle$</h3>
+<p>I applied the reduction step by step (code below) and it worked all the way. So <strong>this pair is bi-graphical.</strong> I also draw a bipartite graph realizing it.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Part</span> <span class="p">(</span><span class="n">b</span><span class="p">):</span>
+  <span class="nb">sum</span><span class="p">(</span><span class="n">S1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">34</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">S2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">34</span>
+  <span class="n">Reduce</span><span class="p">:</span> <span class="n">S1</span><span class="s1">&#39;=[6, 4, 4, 4, 4, 4], S2&#39;</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">Reduce</span><span class="p">:</span> <span class="n">S1</span><span class="s1">&#39;=[4, 4, 4, 4, 4], S2&#39;</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">Reduce</span><span class="p">:</span> <span class="n">S1</span><span class="s1">&#39;=[4, 4, 4, 4], S2&#39;</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">Reduce</span><span class="p">:</span> <span class="n">S1</span><span class="s1">&#39;=[4, 4, 4], S2&#39;</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">Reduce</span><span class="p">:</span> <span class="n">S1</span><span class="s1">&#39;=[4, 4], S2&#39;</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">Reduce</span><span class="p">:</span> <span class="n">S1</span><span class="s1">&#39;=[4], S2&#39;</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">Bi</span><span class="o">-</span><span class="n">graphical</span><span class="err">?</span> <span class="kc">True</span>
+</code></pre></div>
+
+<p><img alt="Bipartite graph" src="assignment_images\fig_6.png" /></p>
+<hr />
+<h2>Question 3: Connectivity</h2>
+<h3>(a) Graphs on 7 vertices with $\deg(v) \geq 3$</h3>
+<p>I tried to draw two different graphs that are disconnected, but any component has to have at least 4 vertices (since each vertex has degree $\geq 3$), so $4+4=8 &gt; 7$ and it's impossible. So <strong>I couldn't get a disconnected example</strong>—they all end up connected. Below are two connected examples.</p>
+<p><img alt="Graphs on 7 vertices" src="assignment_images\fig_7.png" /></p>
+<h3>(b) Graphs on 8 vertices with $\deg(v) \geq 4$</h3>
+<p>Same idea: I tried to get a disconnected one but each part would need at least 5 vertices, so $5+5=10 &gt; 8$. So <strong>again they're all connected.</strong> Two examples below.</p>
+<p><img alt="Graphs on 8 vertices" src="assignment_images\fig_8.png" /></p>
+<h3>(c) Proof</h3>
+<p><strong>Theorem:</strong> If every vertex has $\deg(v) \geq \frac{n-1}{2}$, then $G$ is connected.</p>
+<p><strong>Proof:</strong> Suppose $G$ is disconnected and $u$, $v$ are in different components. The component of $u$ has at least $\deg(u)+1 \geq \frac{n+1}{2}$ vertices, and same for $v$. So total $\geq \frac{n+1}{2}+\frac{n+1}{2}=n+1 &gt; n$, contradiction. So $G$ must be connected. $\square$</p>
+<hr />
+<h2>Question 4: Graph Isomorphism</h2>
+<p>I compared the two graphs: both have 7 vertices, 6 edges, same degree sequence $\langle 3, 3, 2, 1, 1, 1, 1 \rangle$, and both are trees. So <strong>I think they are isomorphic</strong> (and the code confirms it).</p>
+<figure class="figure-with-caption"><img src="assignment_images/fig_9.png" alt="Figure 2" /><figcaption>Figure 2</figcaption></figure>
+
+<p>Left graph has degree sequence $\langle 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2 \rangle$, right has $\langle 5, 5, 5, 5, 3, 3, 3, 3, 2, 2, 2, 2 \rangle$. They're different, so <strong>I conclude they are not isomorphic.</strong></p>
+<hr />
+<h2>Question 5: Complement of Paths</h2>
+<h3>(a) Complements of $P_n$ for $n = 2, 3, 4, 5, 6$</h3>
+<p>I drew each path and its complement and checked whether the complement is connected.</p>
+<p><strong>n = 2:</strong></p>
+<p><img alt="P_2" src="assignment_images\fig_10.png" /></p>
+<p><strong>n = 3:</strong></p>
+<p><img alt="P_3" src="assignment_images\fig_11.png" /></p>
+<p><strong>n = 4:</strong></p>
+<p><img alt="P_4" src="assignment_images\fig_12.png" /></p>
+<p><strong>n = 5:</strong></p>
+<p><img alt="P_5" src="assignment_images\fig_13.png" /></p>
+<p><strong>n = 6:</strong></p>
+<p><img alt="P_6" src="assignment_images\fig_14.png" /></p>
+<p><strong>What I observed:</strong> $\overline{P_2}$ and $\overline{P_3}$ are not connected; for $n \geq 4$ the complement is connected. So the pattern seems to be: $\overline{P_n}$ is connected iff $n \geq 4$.</p>
+<h3>(b) Conjecture and proof</h3>
+<p><strong>Conjecture:</strong> $\overline{P_n}$ is connected if and only if $n \geq 4$.</p>
+<p><strong>Proof:</strong> For $n \geq 4$, in $\overline{P_n}$ any two vertices are either adjacent or share a neighbor, so the graph has diameter $\leq 2$ and is connected. For $n=2,3$ we already saw the complement is disconnected. So the conjecture holds. $\square$</p>
+<h3>(c) Generalization to trees</h3>
+<p>I don't think the same statement holds for all trees—e.g. a star has a very different complement, so connectivity of the complement can behave differently.</p>
+<hr />
+<h2>Question 6: Graph Multiplication (Cartesian Product)</h2>
+<p>I used the definition: vertices of $G * H$ are pairs $(u,a)$; edges $((u,a),(v,b))$ when $u=v$ and $ab \in E(H)$, or $a=b$ and $uv \in E(G)$.</p>
+<h3>(a) Draw $P_2 * K_3$ and $P_3 * K_3$</h3>
+<p>I implemented the product and drew these two graphs below.</p>
+<p><strong>P2 * K3:</strong></p>
+<p><img alt="P2*K3" src="assignment_images\fig_15.png" /></p>
+<p><strong>P3 * K3:</strong></p>
+<p><img alt="P3*K3" src="assignment_images\fig_16.png" /></p>
+<h3>(b) Edge-count formula $m = n_1 m_2 + n_2 m_1$</h3>
+<p>I tried several pairs $(G,H)$ and checked that the number of edges in $G * H$ always matches $n_1 m_2 + n_2 m_1$.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Example</span> <span class="n">G1</span> <span class="o">*</span> <span class="n">H1</span><span class="p">:</span>
+<span class="n">G</span><span class="p">:</span> <span class="n">n1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">H</span><span class="p">:</span> <span class="n">n2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">G</span> <span class="o">*</span> <span class="n">H</span><span class="p">:</span> <span class="o">|</span><span class="n">V</span><span class="o">|=</span><span class="mi">6</span><span class="p">,</span> <span class="o">|</span><span class="n">E</span><span class="o">|=</span><span class="mi">9</span>
+<span class="n">Formula</span> <span class="n">n1</span><span class="o">*</span><span class="n">m2</span> <span class="o">+</span> <span class="n">n2</span><span class="o">*</span><span class="n">m1</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">Matches</span> <span class="n">formula</span><span class="err">?</span> <span class="kc">True</span>
+
+<span class="n">Example</span> <span class="n">G1</span> <span class="o">*</span> <span class="n">H2</span><span class="p">:</span>
+<span class="n">G</span><span class="p">:</span> <span class="n">n1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">H</span><span class="p">:</span> <span class="n">n2</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">G</span> <span class="o">*</span> <span class="n">H</span><span class="p">:</span> <span class="o">|</span><span class="n">V</span><span class="o">|=</span><span class="mi">8</span><span class="p">,</span> <span class="o">|</span><span class="n">E</span><span class="o">|=</span><span class="mi">10</span>
+<span class="n">Formula</span> <span class="n">n1</span><span class="o">*</span><span class="n">m2</span> <span class="o">+</span> <span class="n">n2</span><span class="o">*</span><span class="n">m1</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">Matches</span> <span class="n">formula</span><span class="err">?</span> <span class="kc">True</span>
+
+<span class="n">Example</span> <span class="n">G2</span> <span class="o">*</span> <span class="n">H1</span><span class="p">:</span>
+<span class="n">G</span><span class="p">:</span> <span class="n">n1</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="n">H</span><span class="p">:</span> <span class="n">n2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">G</span> <span class="o">*</span> <span class="n">H</span><span class="p">:</span> <span class="o">|</span><span class="n">V</span><span class="o">|=</span><span class="mi">9</span><span class="p">,</span> <span class="o">|</span><span class="n">E</span><span class="o">|=</span><span class="mi">15</span>
+<span class="n">Formula</span> <span class="n">n1</span><span class="o">*</span><span class="n">m2</span> <span class="o">+</span> <span class="n">n2</span><span class="o">*</span><span class="n">m1</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">Matches</span> <span class="n">formula</span><span class="err">?</span> <span class="kc">True</span>
+
+<span class="n">Example</span> <span class="n">G2</span> <span class="o">*</span> <span class="n">H2</span><span class="p">:</span>
+<span class="n">G</span><span class="p">:</span> <span class="n">n1</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="n">H</span><span class="p">:</span> <span class="n">n2</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">G</span> <span class="o">*</span> <span class="n">H</span><span class="p">:</span> <span class="o">|</span><span class="n">V</span><span class="o">|=</span><span class="mi">12</span><span class="p">,</span> <span class="o">|</span><span class="n">E</span><span class="o">|=</span><span class="mi">17</span>
+<span class="n">Formula</span> <span class="n">n1</span><span class="o">*</span><span class="n">m2</span> <span class="o">+</span> <span class="n">n2</span><span class="o">*</span><span class="n">m1</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">Matches</span> <span class="n">formula</span><span class="err">?</span> <span class="kc">True</span>
+
+<span class="n">Example</span> <span class="n">G3</span> <span class="o">*</span> <span class="n">H1</span><span class="p">:</span>
+<span class="n">G</span><span class="p">:</span> <span class="n">n1</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span> <span class="n">H</span><span class="p">:</span> <span class="n">n2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">G</span> <span class="o">*</span> <span class="n">H</span><span class="p">:</span> <span class="o">|</span><span class="n">V</span><span class="o">|=</span><span class="mi">12</span><span class="p">,</span> <span class="o">|</span><span class="n">E</span><span class="o">|=</span><span class="mi">24</span>
+<span class="n">Formula</span> <span class="n">n1</span><span class="o">*</span><span class="n">m2</span> <span class="o">+</span> <span class="n">n2</span><span class="o">*</span><span class="n">m1</span> <span class="o">=</span> <span class="mi">24</span>
+<span class="n">Matches</span> <span class="n">formula</span><span class="err">?</span> <span class="kc">True</span>
+
+<span class="n">Example</span> <span class="n">G3</span> <span class="o">*</span> <span class="n">H2</span><span class="p">:</span>
+<span class="n">G</span><span class="p">:</span> <span class="n">n1</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">m1</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span> <span class="n">H</span><span class="p">:</span> <span class="n">n2</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">m2</span><span class="o">=</span><span class="mi">3</span>
+<span class="n">G</span> <span class="o">*</span> <span class="n">H</span><span class="p">:</span> <span class="o">|</span><span class="n">V</span><span class="o">|=</span><span class="mi">16</span><span class="p">,</span> <span class="o">|</span><span class="n">E</span><span class="o">|=</span><span class="mi">28</span>
+<span class="n">Formula</span> <span class="n">n1</span><span class="o">*</span><span class="n">m2</span> <span class="o">+</span> <span class="n">n2</span><span class="o">*</span><span class="n">m1</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">Matches</span> <span class="n">formula</span><span class="err">?</span> <span class="kc">True</span>
+</code></pre></div>
+
+<hr />
+<h2>Question 7: Bipartite Graphs with Bipartite Complements</h2>
+<h3>(a) Find a bipartite graph whose complement is also bipartite</h3>
+<p>I tried $K_{2,2}$: it's bipartite, and its complement is just two disjoint edges, so the complement is bipartite too. I drew both below.</p>
+<p><img alt="K_(2, 2) and complement" src="assignment_images\fig_17.png" /></p>
+<h3>(a') Experiment with more examples</h3>
+<p>I ran a few more bipartite graphs and checked whether their complements are bipartite.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">K_</span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">}:</span>
+  <span class="n">Original</span> <span class="n">bipartite</span><span class="p">:</span> <span class="kc">True</span>
+  <span class="n">Complement</span> <span class="n">bipartite</span><span class="p">:</span> <span class="kc">True</span>
+  <span class="n">Original</span><span class="p">:</span> <span class="mi">4</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">4</span> <span class="n">edges</span>
+  <span class="n">Complement</span><span class="p">:</span> <span class="mi">4</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">2</span> <span class="n">edges</span>
+
+<span class="n">K_</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">}:</span>
+  <span class="n">Original</span> <span class="n">bipartite</span><span class="p">:</span> <span class="kc">True</span>
+  <span class="n">Complement</span> <span class="n">bipartite</span><span class="p">:</span> <span class="kc">False</span>
+  <span class="n">Original</span><span class="p">:</span> <span class="mi">6</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">9</span> <span class="n">edges</span>
+  <span class="n">Complement</span><span class="p">:</span> <span class="mi">6</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">6</span> <span class="n">edges</span>
+
+<span class="n">Empty</span> <span class="n">bipartite</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+  <span class="n">Original</span> <span class="n">bipartite</span><span class="p">:</span> <span class="kc">True</span>
+  <span class="n">Complement</span> <span class="n">bipartite</span><span class="p">:</span> <span class="kc">False</span>
+  <span class="n">Original</span><span class="p">:</span> <span class="mi">6</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">9</span> <span class="n">edges</span>
+  <span class="n">Complement</span><span class="p">:</span> <span class="mi">6</span> <span class="n">vertices</span><span class="p">,</span> <span class="mi">6</span> <span class="n">edges</span>
+</code></pre></div>
+
+<h3>(c) Proposition and proof</h3>
+<p><strong>Proposition:</strong> A bipartite graph $G$ has a bipartite complement iff $G = K_{2,2}$ or $G$ is empty (with $n \leq 2$).</p>
+<p><strong>Proof:</strong> ($\Rightarrow$) If $\overline{G}$ is bipartite it has no odd cycles. If $G$ has a part of size $\geq 3$, then in $\overline{G}$ that part gets edges inside it and we get a triangle, so $\overline{G}$ isn't bipartite. So both parts have size $\leq 2$. For $K_{2,2}$, $\overline{G}$ is two disjoint edges (bipartite). For bigger $K_{m,n}$ the complement has cliques, so not bipartite.</p>
+<p>($\Leftarrow$) $K_{2,2}$: complement is two disjoint edges. Empty graph: complement is $K_n$, bipartite only when $n \leq 2$. $\square$</p>
+    </body>
+    </html>
+    
